@@ -114,8 +114,6 @@ void initialize();
  */
 void operatorControl();
 
-#include "buttons.h"
-
 //robot system control
 #include "launcher.h"
 

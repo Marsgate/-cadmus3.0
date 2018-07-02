@@ -6,7 +6,7 @@ void launcher(int vel){
 }
 
 void launcherOp(){
-  if(buttonGetState(JOY1_8R))
+  if(joystickGetDigital(1, 8, JOY_RIGHT))
     launcher(127);
   else
     launcher(0);
