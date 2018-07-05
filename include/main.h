@@ -116,10 +116,18 @@ void operatorControl();
 
 //robot system control
 #include "launcher.h"
+#include "drive.h"
+#include "lift.h"
 
 //ports
 #define LAUNCHER1 1
 #define LAUNCHER2 10
+
+#define DRIVE1 2
+#define DRIVE2 9
+
+#define LIFT1 3
+#define LIFT2 8
 
 // End C++ export structure
 #ifdef __cplusplus

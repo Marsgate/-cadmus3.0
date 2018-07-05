@@ -31,6 +31,8 @@
  */
 void operatorControl() {
 	while (1) {
+		driveOp();
+		liftOp();
 		launcherOp();
 		delay(20);
 	}
