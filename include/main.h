@@ -118,6 +118,8 @@ void operatorControl();
 #include "launcher.h"
 #include "drive.h"
 #include "lift.h"
+#include "tbar.h"
+#include "claw.h"
 
 //ports
 #define LAUNCHER1 1
@@ -128,6 +130,10 @@ void operatorControl();
 
 #define LIFT1 3
 #define LIFT2 8
+
+#define TBAR1 6
+
+#define CLAW1 5
 
 // End C++ export structure
 #ifdef __cplusplus

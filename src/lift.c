@@ -6,10 +6,18 @@ void lift(int vel){
 }
 
 void liftOp(){
+  static int vel;
+
+  lift(vel);
+
   if(joystickGetDigital(1, 5, JOY_UP))
-    lift(127);
+    vel = 127;
   else if(joystickGetDigital(1, 5, JOY_DOWN))
-    lift(-127);
-  else
-    lift(0);
+    vel = -127;
+  else{
+    if(vel > 0)
+      lift(vel/6);
+    else
+      vel = 0;
+  }
 }
