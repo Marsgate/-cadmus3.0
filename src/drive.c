@@ -3,7 +3,7 @@
 //true speed array, src -
 
 const int trueSpeed[128] = {
-	 0,  3,  5,  7,  8,  9, 10, 10, 11, 11,
+	 0,  0,  0,  0,  0,  9, 10, 10, 11, 11,
 	11, 12, 12, 12, 12, 12, 12, 13, 13, 13,
 	13, 14, 14, 14, 14, 14, 15, 15, 15, 15,
 	16, 16, 16, 16, 16, 16, 17, 17, 17, 17,
@@ -20,10 +20,14 @@ const int trueSpeed[128] = {
 
 void left(int vel){
   motorSet(DRIVE1, vel);
+	motorSet(DRIVE2, vel);
+	motorSet(DRIVE3, vel);
 }
 
 void right(int vel){
-  motorSet(DRIVE2, vel);
+	motorSet(DRIVE4, vel);
+	motorSet(DRIVE5, vel);
+	motorSet(DRIVE6, vel);
 }
 
 void drive(int vel){

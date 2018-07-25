@@ -118,22 +118,22 @@ void operatorControl();
 #include "launcher.h"
 #include "drive.h"
 #include "lift.h"
-#include "tbar.h"
-#include "claw.h"
+#include "bIntake.h"
 
 //ports
 #define LAUNCHER1 1
 #define LAUNCHER2 10
 
 #define DRIVE1 2
-#define DRIVE2 9
+#define DRIVE2 3
+#define DRIVE3 4
+#define DRIVE4 7
+#define DRIVE5 8
+#define DRIVE6 9
 
-#define LIFT1 3
-#define LIFT2 8
+#define B_INTAKE1 5
 
-#define TBAR1 6
-
-#define CLAW1 5
+#define LIFT1 11 // not using yet
 
 // End C++ export structure
 #ifdef __cplusplus

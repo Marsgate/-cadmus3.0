@@ -5,8 +5,7 @@ void operatorControl() {
 		driveOp();
 		liftOp();
 		launcherOp();
-		tbarOp();
-		clawOp();
+		bIntakeOp();
 		delay(20);
 	}
 }
