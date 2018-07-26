@@ -2,6 +2,7 @@
 
 void lift(int vel){
   motorSet(LIFT1, vel);
+  motorSet(LIFT2, vel);
 }
 
 void liftOp(){
@@ -9,14 +10,11 @@ void liftOp(){
 
   lift(vel);
 
-  if(joystickGetDigital(1, 5, JOY_UP))
+  if(buttonGetState(JOY1_5U))
     vel = 127;
-  else if(joystickGetDigital(1, 5, JOY_DOWN))
+  else if(buttonGetState(JOY1_5D))
     vel = -127;
   else{
-    if(vel > 0)
-      lift(vel/6);
-    else
       vel = 0;
   }
 }

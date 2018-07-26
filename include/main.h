@@ -114,26 +114,31 @@ void initialize();
  */
 void operatorControl();
 
+//buttons
+#include "buttons.h"
+
 //robot system control
 #include "launcher.h"
 #include "drive.h"
 #include "lift.h"
 #include "bIntake.h"
+#include "wrist.h"
 
 //ports
 #define LAUNCHER1 1
 #define LAUNCHER2 10
 
-#define DRIVE1 2
-#define DRIVE2 3
+#define DRIVE1 3
+#define DRIVE2 7
 #define DRIVE3 4
-#define DRIVE4 7
-#define DRIVE5 8
-#define DRIVE6 9
+#define DRIVE4 8
 
 #define B_INTAKE1 5
 
-#define LIFT1 11 // not using yet
+#define LIFT1 2
+#define LIFT2 9
+
+#define WRIST1 6
 
 // End C++ export structure
 #ifdef __cplusplus

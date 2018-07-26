@@ -6,6 +6,7 @@ void operatorControl() {
 		liftOp();
 		launcherOp();
 		bIntakeOp();
+		wristOp();
 		delay(20);
 	}
 }

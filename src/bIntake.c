@@ -9,9 +9,9 @@ void bIntakeOp(){
 
   bIntake(vel);
 
-  if(joystickGetDigital(1, 6, JOY_UP))
+  if(buttonGetState(JOY1_6U))
     vel = 127;
-  else if(joystickGetDigital(1, 8, JOY_UP))
+  else if(buttonGetState(JOY1_8D))
     vel = -127;
   else{
     if (vel > 0)

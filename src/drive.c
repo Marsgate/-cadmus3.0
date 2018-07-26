@@ -21,13 +21,11 @@ const int trueSpeed[128] = {
 void left(int vel){
   motorSet(DRIVE1, vel);
 	motorSet(DRIVE2, vel);
-	motorSet(DRIVE3, vel);
 }
 
 void right(int vel){
+	motorSet(DRIVE3, vel);
 	motorSet(DRIVE4, vel);
-	motorSet(DRIVE5, vel);
-	motorSet(DRIVE6, vel);
 }
 
 void drive(int vel){
