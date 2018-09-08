@@ -4,6 +4,7 @@
 void left(int vel);
 void right(int vel);
 void drive(int vel);
+void turn(int vel);
 void driveOp();
 
 #endif

@@ -1,7 +1,7 @@
 #ifndef BINTAKE_H_
 #define BINTAKE_H_
 
-void bIntake(int vel);
-void bIntakeOp();
+void intake(int vel);
+void intakeOp();
 
 #endif

@@ -26,5 +26,32 @@
  * The autonomous task may exit, unlike operatorControl() which should never exit. If it does
  * so, the robot will await a switch to another mode or disable/enable cycle.
  */
+
+void brake(){
+  drive(0);
+  delay(1000);
+}
+
+void driveT(int vel, int t){
+  drive(vel);
+  delay(t);
+}
+
+void turnT(int vel, int t){
+  turn(vel);
+  delay(t);
+}
+
 void autonomous() {
+  //drive to position in front of the parking platform
+  driveT(127, 750);
+  brake();
+
+  //turn to face platform
+  turnT(127, 150);
+  brake();
+
+  //drive on the platform
+  driveT(127, 1500);
+  brake();
 }

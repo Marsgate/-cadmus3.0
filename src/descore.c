@@ -1,20 +1,19 @@
 #include "main.h"
 
-void lift(int vel){
-  motorSet(LIFT1, vel);
-  motorSet(LIFT2, vel);
+void descore(int vel){
+  motorSet(DESCORE1, vel);
 }
 
-void liftOp(){
+void descoreOp(){
   static int vel;
 
-  lift(vel);
+  descore(vel);
 
   if(buttonGetState(JOY1_5U))
     vel = 127;
   else if(buttonGetState(JOY1_5D))
     vel = -127;
   else{
-      vel = 0;
+    vel = 0;
   }
 }

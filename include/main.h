@@ -118,27 +118,28 @@ void operatorControl();
 #include "buttons.h"
 
 //robot system control
-#include "launcher.h"
 #include "drive.h"
-#include "lift.h"
-#include "bIntake.h"
-#include "wrist.h"
+#include "intake.h"
+#include "descore.h"
+#include "launcher.h"
 
-//ports
-#define LAUNCHER1 1
-#define LAUNCHER2 10
+//motor ports
+#define LDRIVE1 1
+#define LDRIVE2 9
 
-#define DRIVE1 3
-#define DRIVE2 7
-#define DRIVE3 4
-#define DRIVE4 8
+#define RDRIVE1 2
+#define RDRIVE2 10
 
-#define B_INTAKE1 5
+#define INTAKE1 8
 
-#define LIFT1 2
-#define LIFT2 9
+#define DESCORE1 3
 
-#define WRIST1 6
+#define LAUNCHER1 4
+
+
+//sensor ports
+#define L_LIMIT 12
+
 
 // End C++ export structure
 #ifdef __cplusplus

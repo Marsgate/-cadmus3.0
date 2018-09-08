@@ -1,17 +1,17 @@
 #include "main.h"
 
-void bIntake(int vel){
-  motorSet(B_INTAKE1, vel);
+void intake(int vel){
+  motorSet(INTAKE1, vel);
 }
 
-void bIntakeOp(){
+void intakeOp(){
   static int vel;
 
-  bIntake(vel);
+  intake(vel);
 
   if(buttonGetState(JOY1_6U))
     vel = 127;
-  else if(buttonGetState(JOY1_8D))
+  else if(buttonGetState(JOY1_8U))
     vel = -127;
   else{
     if (vel > 0)

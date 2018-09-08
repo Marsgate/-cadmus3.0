@@ -19,18 +19,23 @@ const int trueSpeed[128] = {
 };
 
 void left(int vel){
-  motorSet(DRIVE1, vel);
-	motorSet(DRIVE2, vel);
+  motorSet(LDRIVE1, vel);
+	motorSet(LDRIVE2, vel);
 }
 
 void right(int vel){
-	motorSet(DRIVE3, vel);
-	motorSet(DRIVE4, vel);
+	motorSet(RDRIVE1, vel);
+	motorSet(RDRIVE2, vel);
 }
 
 void drive(int vel){
   left(vel);
   right(vel);
+}
+
+void turn(int vel){
+	right(vel);
+	left(-vel);
 }
 
 void driveOp(){

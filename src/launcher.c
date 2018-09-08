@@ -2,12 +2,21 @@
 
 void launcher(int vel){
   motorSet(LAUNCHER1, vel);
-  motorSet(LAUNCHER2, vel);
 }
 
 void launcherOp(){
-  if(buttonGetState(JOY1_8R))
-    launcher(127);
-  else
-    launcher(0);
+  static int vel;
+
+  launcher(vel);
+
+  if(buttonGetState(JOY1_6D) || digitalRead(L_LIMIT))
+    vel = 127; //
+  else{
+    vel = 0;
+  }
+
+  if(buttonGetState(JOY1_7U) && digitalRead(L_LIMIT)){
+    vel = 0;
+  }
+
 }

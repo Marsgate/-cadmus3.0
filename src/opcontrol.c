@@ -3,10 +3,9 @@
 void operatorControl() {
 	while (1) {
 		driveOp();
-		liftOp();
+		intakeOp();
+		descoreOp();
 		launcherOp();
-		bIntakeOp();
-		wristOp();
 		delay(20);
 	}
 }
