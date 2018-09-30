@@ -122,24 +122,22 @@ void operatorControl();
 #include "intake.h"
 #include "descore.h"
 #include "launcher.h"
+#include "adjuster.h"
 
 //motor ports
-#define LDRIVE1 1
+#define LDRIVE1 8
 #define LDRIVE2 9
 
 #define RDRIVE1 2
-#define RDRIVE2 10
+#define RDRIVE2 3
 
-#define INTAKE1 8
+#define INTAKE 4
 
-#define DESCORE1 3
+#define DESCORE 6
 
-#define LAUNCHER1 4
+#define ADJUSTER 7
 
-
-//sensor ports
-#define L_LIMIT 12
-
+#define LAUNCHER 10
 
 // End C++ export structure
 #ifdef __cplusplus

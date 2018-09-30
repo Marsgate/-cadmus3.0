@@ -6,6 +6,7 @@ void operatorControl() {
 		intakeOp();
 		descoreOp();
 		launcherOp();
+		adjusterOp();
 		delay(20);
 	}
 }

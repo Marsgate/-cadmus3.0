@@ -1,7 +1,7 @@
 #include "main.h"
 
 void intake(int vel){
-  motorSet(INTAKE1, vel);
+  motorSet(INTAKE, vel);
 }
 
 void intakeOp(){
@@ -11,10 +11,8 @@ void intakeOp(){
 
   if(buttonGetState(JOY1_6U))
     vel = 127;
-  else if(buttonGetState(JOY1_8U))
-    vel = -127;
-  else{
-    if (vel > 0)
-      vel = 0;
-  }
+  else if(buttonGetState(JOY1_5U))
+    vel = -65;
+  else
+    vel = 0;
 }
