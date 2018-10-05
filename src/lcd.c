@@ -67,15 +67,15 @@ void initializationLCD(){
       delay(20);
     }
 
-    lcdSetText(uart1, 2, "Left ----- Right");
+    lcdSetText(uart1, 2, "red ----- blue");
     if(buttonIsNewPress(LCD_CENT)){
       selected--;
     }else if(buttonIsNewPress(LCD_LEFT)){
       selected++;
-      lcdSetText(uart1, 2,"left selected");
+      lcdSetText(uart1, 2,"red selected");
     }else if(buttonIsNewPress(LCD_RIGHT)){
       selected++;
-      lcdSetText(uart1, 2,"right selected");
+      lcdSetText(uart1, 2,"blue selected");
       mirror = true;
     }
     delay(20);
