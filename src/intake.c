@@ -4,6 +4,13 @@ void intake(int vel){
   motorSet(INTAKE, vel);
 }
 
+bool hasBall(){
+  if(analogRead(LINE_L) < 2000 || analogRead(LINE_R) < 2000)
+    return true;
+  else
+    return false;
+}
+
 void intakeOp(){
   static int vel;
 

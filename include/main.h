@@ -51,6 +51,10 @@ void operatorControl();
 
 //analog sensor ports
 #define GYRO 1
+#define LINE_C 2
+#define LINE_L 3
+#define LINE_R 4
+
 
 //sensors
 Encoder enc_l;

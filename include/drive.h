@@ -2,5 +2,7 @@
 #define DRIVE_H_
 
 void driveOp();
+void autoDrive();
+bool driving();
 
 #endif
