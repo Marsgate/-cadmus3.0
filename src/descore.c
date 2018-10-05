@@ -9,9 +9,9 @@ void descoreOp(){
 
   descore(vel);
 
-  if(buttonGetState(JOY1_7U))
+  if(buttonGetState(JOY1_8U))
     vel = 127;
-  else if(buttonGetState(JOY1_7D))
+  else if(buttonGetState(JOY1_8D))
     vel = -127;
   else
     vel = 0;
