@@ -3,6 +3,8 @@
 
 void driveOp();
 void autoDrive();
-bool driving();
+void autoTurn();
+bool isDriving();
+bool isTurning();
 
 #endif

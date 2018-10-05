@@ -1,7 +1,7 @@
 #include "main.h"
 
-//true speed array, src -
-
+/**************************************************/
+//true speed array
 const int trueSpeed[128] = {
 	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
 	 0,  0,  0,  0,  0,  0,  0,  0,  0,  0,
@@ -18,6 +18,9 @@ const int trueSpeed[128] = {
 	76, 80, 82, 85, 87, 91, 101, 127
 };
 
+
+/**************************************************/
+//basic drive functions
 void left(int vel){
   motorSet(LDRIVE1, vel);
 	motorSet(LDRIVE2, vel);
@@ -38,6 +41,75 @@ void turn(int vel){
 	left(-vel);
 }
 
+
+/**************************************************/
+//autonomous control
+void autoDrive(int sp){
+  double kp = .13;
+
+  //int sv = (encoderGet(enc_l)+encoderGet(enc_r))/2;
+	int sv = encoderGet(enc_r);
+  int error = sp-sv;
+  int speed = error*kp;
+
+  drive(speed);
+}
+
+void autoTurn(int sp){
+	if(mirror == true)
+    sp = -sp; // inverted turn speed for blue auton
+
+  double kp = .75;
+
+	int sv = gyroGet(gyro);
+  int error = sp-sv;
+  int speed = error*kp;
+
+  turn(speed);
+}
+
+bool isDriving(){
+	static int count = 0;
+	static int last = 0;
+	int curr = encoderGet(enc_r);
+
+	if(abs(last-curr) < 5)
+		count++;
+	else{
+		count = 0;
+	}
+
+	last = curr;
+
+	if(count > 25){
+		return false;
+	}else
+		return true;
+
+}
+
+bool isTurning(){
+	static int count = 0;
+	static int last = 0;
+	int curr = gyroGet(gyro);
+
+	if(abs(last-curr) < 1)
+		count++;
+	else{
+		count = 0;
+	}
+
+	last = curr;
+
+	if(count > 25){
+		return false;
+	}else
+		return true;
+
+}
+
+/**************************************************/
+//operator control
 void driveOp(){
   int lJoy = joystickGetAnalog(1, 3);
   int rJoy = joystickGetAnalog(1, 2);
