@@ -1,5 +1,9 @@
 #include "main.h"
 
+static bool driveMode = true;
+static int driveTarget = 0;
+static int turnTarget = 0;
+
 /**************************************************/
 //true speed array
 const int trueSpeed[128] = {
@@ -43,8 +47,9 @@ void turn(int vel){
 
 
 /**************************************************/
-//autonomous control
-void autoDrive(int sp){
+//PID control
+void drivePID(){
+	int sp = driveTarget;
   double kp = .13;
 
   //int sv = (encoderGet(enc_l)+encoderGet(enc_r))/2;
@@ -52,10 +57,12 @@ void autoDrive(int sp){
   int error = sp-sv;
   int speed = error*kp;
 
-  drive(speed);
+	if(driveMode)
+  	drive(speed);
 }
 
-void autoTurn(int sp){
+void turnPID(){
+	int sp = turnTarget;
 	if(mirror == true)
     sp = -sp; // inverted turn speed for blue auton
 
@@ -65,11 +72,31 @@ void autoTurn(int sp){
   int error = sp-sv;
   int speed = error*kp;
 
-  turn(speed);
+	if(!driveMode)
+		turn(speed);
 }
 
+
+/**************************************************/
+//autonomous functions
+void autoDrive(int sp){
+	encoderReset(enc_l);
+	encoderReset(enc_r);
+	driveTarget = sp;
+	driveMode = true;
+}
+
+void autoTurn(int sp){
+	gyroReset(gyro);
+	driveTarget = sp;
+	driveMode = false;
+}
+
+
+/**************************************************/
+//chassis state checks
 bool isDriving(){
-	static int count = 0;
+	static int count = 26;
 	static int last = 0;
 	int curr = encoderGet(enc_r);
 
@@ -81,7 +108,8 @@ bool isDriving(){
 
 	last = curr;
 
-	if(count > 25){
+	//not driving if we haven't moved in .5 seconds and the robot is close to it's target
+	if(count > 25 && abs(encoderGet(enc_r) - driveTarget ) < 150){
 		return false;
 	}else
 		return true;
@@ -89,7 +117,7 @@ bool isDriving(){
 }
 
 bool isTurning(){
-	static int count = 0;
+	static int count = 26; //start not driving
 	static int last = 0;
 	int curr = gyroGet(gyro);
 
@@ -101,9 +129,10 @@ bool isTurning(){
 
 	last = curr;
 
-	if(count > 25){
+	//not driving if we haven't moved in .5 seconds and the robot is close to it's target
+	if(count > 25 && abs(gyroGet(gyro) - turnTarget) < 5)
 		return false;
-	}else
+	else
 		return true;
 
 }

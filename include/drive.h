@@ -2,8 +2,13 @@
 #define DRIVE_H_
 
 void driveOp();
-void autoDrive();
-void autoTurn();
+
+void autoDrive(int sp);
+void autoTurn(int sp);
+
+void drivePID();
+void turnPID();
+
 bool isDriving();
 bool isTurning();
 
