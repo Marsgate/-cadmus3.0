@@ -131,8 +131,8 @@ bool isDriving(){
 	lastTarget = target;
 	last = curr;
 
-	//not driving if we haven't moved in .5 seconds and the robot is close to it's target
-	if(count > 25 && abs(curr - target)){
+	//not driving if we haven't moved in .5
+	if(count > 25){
 		return false;
 	}else
 		return true;
