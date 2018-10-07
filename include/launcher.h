@@ -4,4 +4,6 @@
 void launcher(int vel);
 void launcherOp();
 
+bool isFired();
+
 #endif

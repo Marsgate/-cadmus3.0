@@ -49,28 +49,36 @@ void turn(int vel){
 /**************************************************/
 //PID control
 void drivePID(){
+	static int prevError;
 	int sp = driveTarget;
-  double kp = .13;
 
-  //int sv = (encoderGet(enc_l)+encoderGet(enc_r))/2;
+  double kp = 0.16;
+	double kd = 0;
+
 	int sv = encoderGet(enc_r);
   int error = sp-sv;
-  int speed = error*kp;
+	int derivative = error - prevError;
+	prevError = error;
+  int speed = error*kp + derivative+kd;
 
 	if(driveMode)
   	drive(speed);
 }
 
 void turnPID(){
+	static int prevError;
 	int sp = turnTarget;
 	if(mirror == true)
     sp = -sp; // inverted turn speed for blue auton
 
-  double kp = .75;
+  double kp = 1.5;
+	double kd = 4.25;
 
 	int sv = gyroGet(gyro);
   int error = sp-sv;
-  int speed = error*kp;
+	int derivative = error - prevError;
+	prevError = error;
+  int speed = error*kp + derivative*kd;
 
 	if(!driveMode)
 		turn(speed);
@@ -88,54 +96,49 @@ void autoDrive(int sp){
 
 void autoTurn(int sp){
 	gyroReset(gyro);
-	driveTarget = sp;
+	turnTarget = sp;
 	driveMode = false;
 }
 
-
-/**************************************************/
-//chassis state checks
 bool isDriving(){
 	static int count = 26;
 	static int last = 0;
-	int curr = encoderGet(enc_r);
+	static int lastTarget = 0;
 
-	if(abs(last-curr) < 5)
+	int curr;
+	int thresh;
+	int target;
+
+	if(driveMode){
+		curr = encoderGet(enc_r);
+		thresh = 5;
+		target = driveTarget;
+	}else{
+		curr = gyroGet(gyro);
+		thresh = 1;
+		target = turnTarget;
+	}
+
+	if(abs(last-curr) < thresh)
 		count++;
 	else{
 		count = 0;
 	}
 
+	if(target != lastTarget)
+		count = 0;
+
+	lastTarget = target;
 	last = curr;
 
 	//not driving if we haven't moved in .5 seconds and the robot is close to it's target
-	if(count > 25 && abs(encoderGet(enc_r) - driveTarget ) < 150){
+	if(count > 25 && abs(curr - target)){
 		return false;
 	}else
 		return true;
 
 }
 
-bool isTurning(){
-	static int count = 26; //start not driving
-	static int last = 0;
-	int curr = gyroGet(gyro);
-
-	if(abs(last-curr) < 1)
-		count++;
-	else{
-		count = 0;
-	}
-
-	last = curr;
-
-	//not driving if we haven't moved in .5 seconds and the robot is close to it's target
-	if(count > 25 && abs(gyroGet(gyro) - turnTarget) < 5)
-		return false;
-	else
-		return true;
-
-}
 
 /**************************************************/
 //operator control

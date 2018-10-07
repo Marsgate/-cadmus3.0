@@ -25,7 +25,7 @@ void launcherOp(){
 
   //auto ratcheting
   if(isFired())
-    t = 25;
+    t = 20;
   if(t > 0)
     vel = 127;
   t--;
