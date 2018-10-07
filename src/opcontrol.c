@@ -1,36 +1,36 @@
 #include "main.h"
 
 void control(){
-	driveOp();
-	intakeOp();
-	descoreOp();
-	launcherOp();
-	adjusterOp();
+  driveOp();
+  intakeOp();
+  descoreOp();
+  launcherOp();
+  adjusterOp();
 }
 
 void operatorControl() {
 
-	operatorLCD();
+  operatorLCD();
 
-	while (1) {
+  while (1) {
 
-		control();
+    control();
 
-		//feedback
-		lcdClear(uart1);
-		lcdPrint(uart1, 1, "1: %d, 2:%d", encoderGet(enc_l), encoderGet(enc_r));
-		//lcdPrint(uart1, 2, "Gyro:%d", gyroGet(gyro));
-		/*
-		lcdPrint(uart1, 1, "L:%d C:%d R:%d",
-			analogRead(LINE_L)/100,
-			analogRead(LINE_C)/100,
-			analogRead(LINE_R)/100
-		);
-		lcdPrint(uart1, 2, "hasBall: %d", hasBall());
-		*/
-		//lcdPrint(uart1, 2, "isDriving: %d", isDriving());
-		lcdPrint(uart1, 2, "isTurning: %d", isTurning());
+    //feedback
+    lcdClear(uart1);
+    lcdPrint(uart1, 1, "1: %d, 2:%d", encoderGet(enc_l), encoderGet(enc_r));
+    //lcdPrint(uart1, 2, "Gyro:%d", gyroGet(gyro));
+    /*
+    lcdPrint(uart1, 1, "L:%d C:%d R:%d",
+      analogRead(LINE_L)/100,
+      analogRead(LINE_C)/100,
+      analogRead(LINE_R)/100
+    );
+    lcdPrint(uart1, 2, "hasBall: %d", hasBall());
+    */
+    //lcdPrint(uart1, 2, "isDriving: %d", isDriving());
+    lcdPrint(uart1, 2, "isTurning: %d", isTurning());
 
-		delay(20);
-	}
+    delay(20);
+  }
 }
