@@ -63,7 +63,7 @@ void initializationLCD(){
         if(auton < AUTO_COUNT) auton++;
       }
 
-        lcdSetText(uart1, 1, autoNames[auton]);
+      lcdSetText(uart1, 1, autoNames[auton]);
       delay(20);
     }
 

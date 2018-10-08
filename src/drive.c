@@ -72,7 +72,7 @@ void turnPID(){
     sp = -sp; // inverted turn speed for blue auton
 
   double kp = 1.5;
-  double kd = 4.25;
+  double kd = 4.6;
 
   int sv = gyroGet(gyro);
   int error = sp-sv;

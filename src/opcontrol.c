@@ -29,7 +29,6 @@ void operatorControl() {
     lcdPrint(uart1, 2, "hasBall: %d", hasBall());
     */
     //lcdPrint(uart1, 2, "isDriving: %d", isDriving());
-    lcdPrint(uart1, 2, "isTurning: %d", isTurning());
 
     delay(20);
   }
