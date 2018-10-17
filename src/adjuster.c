@@ -6,9 +6,17 @@ void adjuster(int vel){
 
 void adjusterOp(){
   static int vel = 0;
-  static int d = 1;
+  static int d = 0;
   static int t = 0;
   t++;
+
+  //first run initializer of d
+  if(d == 0){
+    if(digitalRead(5))
+      d = 1;
+    else
+      d = -1;
+  }
 
   adjuster(vel);
 
