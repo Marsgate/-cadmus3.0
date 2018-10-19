@@ -5,11 +5,13 @@ void drive(int vel);
 
 void driveOp();
 
+void startDrive(int sp);
+void startTurn(int sp);
 void autoDrive(int sp);
 void autoTurn(int sp);
 
-void drivePID();
-void turnPID();
+void driveControl();
+void turnControl();
 
 bool isDriving();
 

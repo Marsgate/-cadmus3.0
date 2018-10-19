@@ -45,27 +45,53 @@ void turn(int vel){
   left(-vel);
 }
 
-
 /**************************************************/
-//PID control
-void drivePID(){
-  static int prevError;
+//drive control
+void driveControl(){
+
+  if(!driveMode)
+    return;
+
   int sp = driveTarget;
 
   double kp = 0.16;
-  double kd = 0;
+  double kp2 = 7;
 
-  int sv = encoderGet(enc_r);
+  //read sensors
+  int ls = encoderGet(enc_l);
+  int rs = encoderGet(enc_r);
+  int sv = (ls+rs)/2;
+  int sd = ls-rs;
+
+  //speed
   int error = sp-sv;
-  int derivative = error - prevError;
-  prevError = error;
-  int speed = error*kp + derivative+kd;
+  int speed = error*kp;
+  int dif = sd*kp2;
 
-  if(driveMode)
-    drive(speed);
+  //limiting
+  if(speed > 127)
+    speed = 127;
+  if(speed < -127)
+    speed = -127;
+
+
+  if(abs(error) < 200)
+    dif = 0;
+
+
+  //set motors
+  left(speed-dif);
+  right(speed+dif);
+
+  printf("speed: %d, ", speed);
+  printf("dif: %d\n", dif);
 }
 
-void turnPID(){
+void turnControl(){
+
+  if(driveMode)
+    return;
+
   static int prevError;
   int sp = turnTarget;
   if(mirror == true)
@@ -80,24 +106,34 @@ void turnPID(){
   prevError = error;
   int speed = error*kp + derivative*kd;
 
-  if(!driveMode)
-    turn(speed);
+  turn(speed);
+
 }
 
 
 /**************************************************/
 //autonomous functions
-void autoDrive(int sp){
+void startDrive(int sp){
   encoderReset(enc_l);
   encoderReset(enc_r);
   driveTarget = sp;
   driveMode = true;
 }
 
-void autoTurn(int sp){
+void startTurn(int sp){
   gyroReset(gyro);
   turnTarget = sp;
   driveMode = false;
+}
+
+void autoDrive(int sp){
+  startDrive(sp);
+  while(isDriving()) delay(20);
+}
+
+void autoTurn(int sp){
+  startTurn(sp);
+  while(isDriving()) delay(20);
 }
 
 bool isDriving(){
