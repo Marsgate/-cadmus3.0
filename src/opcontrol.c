@@ -1,7 +1,7 @@
 #include "main.h"
 
 void control(){
-  driveOp();
+  arcadeOp();
   intakeOp();
   descoreOp();
   launcherOp();
@@ -18,7 +18,7 @@ void operatorControl() {
 
     //feedback
     lcdClear(uart1);
-    lcdPrint(uart1, 1, "1: %d, 2:%d", encoderGet(enc_l), encoderGet(enc_r));
+    lcdPrint(uart1, 1, "L: %d, R:%d", encoderGet(enc_l), encoderGet(enc_r));
     //lcdPrint(uart1, 2, "Gyro:%d", gyroGet(gyro));
     /*
     lcdPrint(uart1, 1, "L:%d C:%d R:%d",

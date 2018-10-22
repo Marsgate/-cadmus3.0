@@ -127,7 +127,7 @@ void autonomous() {
       skills();
       break;
     case 1:
-      autoDrive(3000);
+      autoTurn(45);
       break; //None
     case 2:
       park = true;

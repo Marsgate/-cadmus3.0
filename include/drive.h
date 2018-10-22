@@ -3,7 +3,8 @@
 
 void drive(int vel);
 
-void driveOp();
+void tankOp();
+void arcadeOp();
 
 void startDrive(int sp);
 void startTurn(int sp);

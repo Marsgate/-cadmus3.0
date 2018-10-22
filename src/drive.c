@@ -1,4 +1,5 @@
 #include "main.h"
+#include <math.h>
 
 static bool driveMode = true;
 static int driveTarget = 0;
@@ -54,8 +55,8 @@ void driveControl(){
 
   int sp = driveTarget;
 
-  double kp = 0.16;
-  double kp2 = 7;
+  double kp = .15;
+  double kp2 = 4;
 
   //read sensors
   int ls = encoderGet(enc_l);
@@ -68,7 +69,7 @@ void driveControl(){
   int speed = error*kp;
   int dif = sd*kp2;
 
-  //limiting
+  //speed limiting
   if(speed > 127)
     speed = 127;
   if(speed < -127)
@@ -94,20 +95,31 @@ void turnControl(){
 
   static int prevError;
   int sp = turnTarget;
+
   if(mirror == true)
     sp = -sp; // inverted turn speed for blue auton
 
-  double kp = 1.5;
-  double kd = 4.6;
+  double kp = 2.46 * pow(sp, -0.145);
+  double kd = (-0.00056 * pow(sp, 2)) + (0.148 * sp) - 2.92;
+  if(kd > 5.8)
+    kd = 5.8;
 
-  int sv = gyroGet(gyro);
+
+  int encoders = ((encoderGet(enc_r)-encoderGet(enc_l))/2)/3.097;
+  int gy = gyroGet(gyro);
+
+  int sv = (gy+encoders)/2;
   int error = sp-sv;
-  int derivative = error - prevError;
+  int derivative = error-prevError;
   prevError = error;
   int speed = error*kp + derivative*kd;
 
   turn(speed);
 
+  printf("kd: %f, ", kd);
+  printf("encoders: %d, ", encoders);
+  printf("gyro: %d, ", gy);
+  printf("Error: %d\n", error);
 }
 
 
@@ -121,6 +133,8 @@ void startDrive(int sp){
 }
 
 void startTurn(int sp){
+  encoderReset(enc_l);
+  encoderReset(enc_r);
   gyroReset(gyro);
   turnTarget = sp;
   driveMode = false;
@@ -178,9 +192,32 @@ bool isDriving(){
 
 /**************************************************/
 //operator control
-void driveOp(){
+void tankOp(){
   int lJoy = joystickGetAnalog(1, 3);
   int rJoy = joystickGetAnalog(1, 2);
   left(lJoy >= 0 ? trueSpeed[abs(lJoy)] : -trueSpeed[abs(lJoy)]);
   right(rJoy >= 0 ? trueSpeed[abs(rJoy)] : -trueSpeed[abs(rJoy)]);
+}
+
+
+void arcadeOp(){
+  int vJoy = joystickGetAnalog(1, 2);
+  int hJoy = joystickGetAnalog(1, 4);
+
+  //true speed
+  int v = vJoy >= 0 ? trueSpeed[abs(vJoy)] : -trueSpeed[abs(vJoy)];
+  int h = hJoy >= 0 ? trueSpeed[abs(hJoy)] : -trueSpeed[abs(hJoy)];
+
+  //speed calculation
+  int l = v+h;
+  int r = v-h;
+
+  //scaling for over power
+  if(abs(l) > 127)
+    r *= (127/l);
+  if(abs(r) > 127)
+    l *= (127/r);
+
+  left(l);
+  right(r);
 }
