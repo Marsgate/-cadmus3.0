@@ -56,7 +56,7 @@ void driveControl(){
   int sp = driveTarget;
 
   double kp = .15;
-  double kp2 = 4;
+  double kp2 = 2;
 
   //read sensors
   int ls = encoderGet(enc_l);
@@ -76,13 +76,14 @@ void driveControl(){
     speed = -127;
 
 
-  if(abs(error) < 200)
+  if(speed < 90)
     dif = 0;
 
 
   //set motors
   left(speed-dif);
   right(speed+dif);
+
 
   printf("speed: %d, ", speed);
   printf("dif: %d\n", dif);
@@ -99,8 +100,9 @@ void turnControl(){
   if(mirror == true)
     sp = -sp; // inverted turn speed for blue auton
 
-  double kp = 2.46 * pow(sp, -0.145);
-  double kd = (-0.00056 * pow(sp, 2)) + (0.148 * sp) - 2.92;
+  int ab = abs(sp); //absolute setpoint
+  double kp = 2.46 * pow(ab, -0.145);
+  double kd = (-0.00056 * pow(ab, 2)) + (0.148 * ab) - 2.92;
   if(kd > 5.8)
     kd = 5.8;
 

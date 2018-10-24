@@ -48,22 +48,24 @@ void far(){
 }
 
 void skills(){
-  //flip the nearest cap
-  intake(-40);
-  startDrive(2.2 TL);
-  while(encoderGet(enc_r) < 1.9 TL) delay(20);
-  intake(127);
-  while(!hasBall()) delay(20);
-  intake(0);
-  while(isDriving()) delay(20);
 
+  //flip the nearest cap
+  intake(-127);
+  startDrive(2.4 TL);
+  while(encoderGet(enc_r) < 2 TL) delay(20);
+  intakeBall();
+  while(encoderGet(enc_r) < 2.1 TL) delay(20);
 
   //back up against wall
-  intake(0);
-  autoDrive(-2.2 TL);
+  startDrive(-.4 TL);
+  while(encoderGet(enc_r) > -.2 TL) delay(20);
+  startDrive(-2.4 TL);
+
+  while(isDriving()) delay(20);
 
   //align with flags
-  autoTurn(80);
+  autoDrive(.4 TL);
+  autoTurn(90);
 
   //launch the balls
   launcher(127);
@@ -80,8 +82,10 @@ void skills(){
   intake(0);
 
   //toggle the low flag
-  autoTurn(14);
+  autoTurn(11);
+  intake(-127);
   autoDrive(2.5 TL);
+  intake(0);
 
   //backup to align with next cap
   autoDrive(-1.1 TL);
@@ -90,13 +94,35 @@ void skills(){
   autoTurn(-90);
   autoDrive(-.4 TL);
 
-
   //flip next cap
   intake(-80);
   autoDrive(1.5 TL);
-  autoDrive(-.5);
   intake(0);
 
+  //align against wall
+  autoDrive(-1.7 TL);
+  autoDrive(.4 TL);
+
+  //align for park
+  autoTurn(-90);
+  autoDrive(2 TL);
+  autoTurn(90);
+  autoDrive(.7 TL);
+
+  //alliance park
+  startDrive(2 TL);
+  while(encoderGet(enc_r) < .9 TL) delay(20);
+  autoDrive(-1);
+
+  //center park
+  autoDrive(.3 TL);
+  startDrive(2 TL);
+  while(encoderGet(enc_r) < .9 TL) delay(20);
+  autoDrive(-1);
+
+
+
+  /* old park
   //align for park
   autoTurn(-75);
   autoDrive(1.5 TL);
@@ -105,7 +131,6 @@ void skills(){
   startDrive(2 TL);
   while(encoderGet(enc_r) < .9 TL) delay(20);
   autoDrive(-1);
-  while(isDriving()) delay(20);
 
   //align for park
   autoTurn(85);
@@ -115,6 +140,7 @@ void skills(){
   startDrive(2 TL);
   while(encoderGet(enc_r) < .9 TL) delay(20);
   autoDrive(-1);
+  */
 }
 
 void autonomous() {
@@ -127,7 +153,7 @@ void autonomous() {
       skills();
       break;
     case 1:
-      autoTurn(45);
+      autoTurn(-90);
       break; //None
     case 2:
       park = true;

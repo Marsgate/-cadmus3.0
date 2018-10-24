@@ -1,7 +1,7 @@
 #include "main.h"
 
 void control(){
-  arcadeOp();
+  tankOp();
   intakeOp();
   descoreOp();
   launcherOp();
