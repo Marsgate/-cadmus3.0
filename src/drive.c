@@ -4,6 +4,7 @@
 static bool driveMode = true;
 static int driveTarget = 0;
 static int turnTarget = 0;
+static int maxSpeed = 127;
 
 /**************************************************/
 //true speed array
@@ -56,37 +57,24 @@ void driveControl(){
   int sp = driveTarget;
 
   double kp = .15;
-  double kp2 = 2;
 
   //read sensors
   int ls = encoderGet(enc_l);
   int rs = encoderGet(enc_r);
   int sv = (ls+rs)/2;
-  int sd = ls-rs;
 
   //speed
   int error = sp-sv;
   int speed = error*kp;
-  int dif = sd*kp2;
 
-  //speed limiting
-  if(speed > 127)
-    speed = 127;
-  if(speed < -127)
-    speed = -127;
-
-
-  if(speed < 90)
-    dif = 0;
-
+  if(speed > maxSpeed)
+    speed = maxSpeed;
+  if(speed < -maxSpeed)
+    speed = -maxSpeed;
 
   //set motors
-  left(speed-dif);
-  right(speed+dif);
-
-
-  printf("speed: %d, ", speed);
-  printf("dif: %d\n", dif);
+  left(speed);
+  right(speed);
 }
 
 void turnControl(){
@@ -95,39 +83,35 @@ void turnControl(){
     return;
 
   static int prevError;
+
   int sp = turnTarget;
 
   if(mirror == true)
     sp = -sp; // inverted turn speed for blue auton
 
-  int ab = abs(sp); //absolute setpoint
-  double kp = 2.46 * pow(ab, -0.145);
-  double kd = (-0.00056 * pow(ab, 2)) + (0.148 * ab) - 2.92;
-  if(kd > 5.8)
-    kd = 5.8;
-
+  //int ab = abs(sp); //absolute setpoint
+  double kp = 1.3;
+  double kd = 6;
 
   int encoders = ((encoderGet(enc_r)-encoderGet(enc_l))/2)/3.097;
   int gy = gyroGet(gyro);
 
-  int sv = (gy+encoders)/2;
+  int sv = (encoders+gy)/2;
   int error = sp-sv;
-  int derivative = error-prevError;
+  int derivative = error - prevError;
   prevError = error;
   int speed = error*kp + derivative*kd;
 
   turn(speed);
 
-  printf("kd: %f, ", kd);
-  printf("encoders: %d, ", encoders);
-  printf("gyro: %d, ", gy);
-  printf("Error: %d\n", error);
+  printf("Error %d\n", error);
 }
 
 
 /**************************************************/
 //autonomous functions
 void startDrive(int sp){
+  maxSpeed = 127;
   encoderReset(enc_l);
   encoderReset(enc_r);
   driveTarget = sp;
@@ -135,9 +119,9 @@ void startDrive(int sp){
 }
 
 void startTurn(int sp){
+  gyroReset(gyro);
   encoderReset(enc_l);
   encoderReset(enc_r);
-  gyroReset(gyro);
   turnTarget = sp;
   driveMode = false;
 }
@@ -152,30 +136,31 @@ void autoTurn(int sp){
   while(isDriving()) delay(20);
 }
 
+void driveSpeed(int sp, int speed){
+  startDrive(sp);
+  maxSpeed = speed;
+}
+
 bool isDriving(){
   static int count = 26;
   static int last = 0;
   static int lastTarget = 0;
 
-  int curr;
-  int thresh;
-  int target;
 
-  if(driveMode){
-    curr = encoderGet(enc_r);
-    thresh = 5;
+
+  int curr = encoderGet(enc_r);
+  int thresh = 2;
+  int target = turnTarget;
+
+  if(driveMode)
     target = driveTarget;
-  }else{
-    curr = gyroGet(gyro);
-    thresh = 1;
-    target = turnTarget;
-  }
+
 
   if(abs(last-curr) < thresh)
     count++;
-  else{
+  else
     count = 0;
-  }
+
 
   if(target != lastTarget)
     count = 0;
@@ -184,9 +169,9 @@ bool isDriving(){
   last = curr;
 
   //not driving if we haven't moved in .5
-  if(count > 25){
+  if(count > 25)
     return false;
-  }else
+  else
     return true;
 
 }

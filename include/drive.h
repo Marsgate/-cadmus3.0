@@ -10,6 +10,7 @@ void startDrive(int sp);
 void startTurn(int sp);
 void autoDrive(int sp);
 void autoTurn(int sp);
+void driveSpeed(int sp, int speed);
 
 void driveControl();
 void turnControl();

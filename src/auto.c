@@ -5,7 +5,41 @@
 static int park = false;
 
 void close(){
+  //launch the ball
+  launcher(127);
+  while(!isFired()) delay(20);
+  launcher(0);
 
+  //toggle the low flag
+  autoTurn(13);
+  intake(-127);
+  autoDrive(2.5 TL);
+  intake(0);
+
+  //backup to align with next cap
+  autoDrive(-1.1 TL);
+
+  //line up with the wall
+  autoTurn(-90);
+  autoDrive(-.4 TL);
+
+  //flip next cap
+  intake(-80);
+  autoDrive(1.5 TL);
+  intake(0);
+
+  //align with platform
+  autoTurn(-83);
+  autoDrive(1.3 TL);
+
+  // if auto is not a parking auton, exit
+  if(!park)
+    return;
+
+  //alliance park
+  startDrive(2 TL);
+  while(encoderGet(enc_r) < .9 TL) delay(20);
+  autoDrive(-1);
 }
 
 void far(){
@@ -14,28 +48,28 @@ void far(){
   while(!isFired()) delay(20);
   launcher(0);
 
-  //turn to the cap
+  //align with wall
+  autoDrive(-1.3 TL);
+
+  //face cap
+  autoDrive(.2 TL);
   autoTurn(-90);
 
-  //intake the ball cap
-  autoDrive(2.2 TL);
-  intake(127);
-  while(!hasBall()) delay(20);
-  intake(0);
-
-  //turn to second cap
-  autoTurn(-90);
-
-  //flip second cap
+  //flip cap
   intake(-127);
-  autoDrive(1 TL);
-  autoDrive(-.3);
+  startDrive(1.2 TL);
+  while(encoderGet(enc_r) < .6 TL) delay(20);
+  driveSpeed(2 TL, 20);
+  while(encoderGet(enc_r) < 1.2 TL) delay(20);
+
+
+  //face platform
+  autoDrive(-.55 TL);
   intake(0);
+  autoTurn(85);
 
-  //align with park
-  autoTurn(-160);
-  autoDrive(1.2 TL);
-
+  //drive to platform
+  autoDrive(1.4 TL);
 
   // if auto is not a parking auton, exit
   if(!park)
@@ -153,6 +187,7 @@ void autonomous() {
       skills();
       break;
     case 1:
+      autoTurn(90);
       autoTurn(-90);
       break; //None
     case 2:
