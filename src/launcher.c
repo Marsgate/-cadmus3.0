@@ -23,8 +23,13 @@ void launcherOp(){
     vel = 0;
 
 
+  static int panic = false;
+  if(buttonIsNewPress(JOY1_7U))
+    panic = !panic;
+
+
   //auto ratcheting
-  if(isFired())
+  if(isFired() && !panic)
     t = 20;
   if(t > 0)
     vel = 127;
