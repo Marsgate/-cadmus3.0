@@ -48,6 +48,18 @@ void turn(int vel){
 }
 
 /**************************************************/
+//dual gyro control
+int gyRead(){
+  int gyroVal = (gyroGet(gy1) - gyroGet(gy2))/2;
+  return gyroVal;
+}
+
+void gyReset(){
+  gyroReset(gy1);
+  gyroReset(gy2);
+}
+
+/**************************************************/
 //drive control
 void driveControl(){
 
@@ -93,10 +105,7 @@ void turnControl(){
   double kp = 1.3;
   double kd = 6;
 
-  int encoders = ((encoderGet(enc_r)-encoderGet(enc_l))/2)/3.097;
-  int gy = gyroGet(gyro);
-
-  int sv = (encoders+gy)/2;
+  int sv = gyRead();
   int error = sp-sv;
   int derivative = error - prevError;
   prevError = error;
@@ -119,9 +128,8 @@ void startDrive(int sp){
 }
 
 void startTurn(int sp){
-  gyroReset(gyro);
-  encoderReset(enc_l);
-  encoderReset(enc_r);
+  gyroReset(gy1);
+  gyroReset(gy2);
   turnTarget = sp;
   driveMode = false;
 }

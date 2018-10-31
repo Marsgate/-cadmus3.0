@@ -13,7 +13,8 @@ void initialize() {
   //sensor initialization
   enc_l = encoderInit(ENC_L1, ENC_L2, false);
   enc_r = encoderInit(ENC_R1, ENC_R2, false);
-  gyro = gyroInit(GYRO, 0);
+  gy1 = gyroInit(GY1, 0);
+  gy2 = gyroInit(GY2, 0);
 
   //lcd
   lcdInit(uart1);

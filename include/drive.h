@@ -6,6 +6,9 @@ void drive(int vel);
 void tankOp();
 void arcadeOp();
 
+int gyRead();
+void gyReset();
+
 void startDrive(int sp);
 void startTurn(int sp);
 void autoDrive(int sp);

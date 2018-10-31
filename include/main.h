@@ -50,7 +50,8 @@ void operatorControl();
 
 
 //analog sensor ports
-#define GYRO 1
+#define GY1 1
+#define GY2 5
 #define LINE_C 2
 #define LINE_L 3
 #define LINE_R 4
@@ -59,7 +60,8 @@ void operatorControl();
 //sensors
 Encoder enc_l;
 Encoder enc_r;
-Gyro gyro;
+Gyro gy1;
+Gyro gy2;
 
 
 // End C++ export structure
