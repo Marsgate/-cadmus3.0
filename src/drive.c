@@ -63,12 +63,15 @@ void gyReset(){
 //drive control
 void driveControl(){
 
+  static int prevError = 0;
+
   if(!driveMode)
     return;
 
   int sp = driveTarget;
 
-  double kp = .15;
+  double kp = .2;
+  double kd = .5;
 
   //read sensors
   int ls = encoderGet(enc_l);
@@ -77,7 +80,9 @@ void driveControl(){
 
   //speed
   int error = sp-sv;
-  int speed = error*kp;
+  int derivative = error - prevError;
+  prevError = error;
+  int speed = error*kp + derivative*kd;
 
   if(speed > maxSpeed)
     speed = maxSpeed;
