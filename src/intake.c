@@ -13,6 +13,13 @@ bool hasBall(){
     return false;
 }
 
+bool isLoaded(){
+  if(analogRead(LINE_I) < 2000)
+    return true;
+  else
+    return false;
+}
+
 void intakeOp(){
   static int vel;
 
@@ -35,6 +42,17 @@ void intakeBallTask(void * parameter){
   taskDelete(intakeHandle); // stop running the task
 }
 
+void loadBallTask(void * parameter){
+  intake(127);
+  while(!isLoaded()) delay(20);
+  intake(0);
+  taskDelete(intakeHandle); // stop running the task
+}
+
 void intakeBall(){
   intakeHandle = taskCreate(intakeBallTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
+}
+
+void loadBall(){
+  intakeHandle = taskCreate(loadBallTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }

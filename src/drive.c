@@ -5,6 +5,7 @@ static bool driveMode = true;
 static int driveTarget = 0;
 static int turnTarget = 0;
 static int maxSpeed = 127;
+static int slant = 0;
 
 /**************************************************/
 //true speed array
@@ -90,8 +91,8 @@ void driveControl(){
     speed = -maxSpeed;
 
   //set motors
-  left(speed);
-  right(speed);
+  left(speed - slant);
+  right(speed + slant);
 }
 
 void turnControl(){
@@ -126,6 +127,7 @@ void turnControl(){
 //autonomous functions
 void startDrive(int sp){
   maxSpeed = 127;
+  slant = 0;
   encoderReset(enc_l);
   encoderReset(enc_r);
   driveTarget = sp;
@@ -149,20 +151,25 @@ void autoTurn(int sp){
   while(isDriving()) delay(20);
 }
 
-void driveSpeed(int sp, int speed){
-  startDrive(sp);
+void setSpeed(int speed){
   maxSpeed = speed;
 }
 
+void setSlant(int s){
+  if(mirror)
+    s = -s;
+  slant = s;
+}
+
 bool isDriving(){
-  static int count = 26;
+  static int count = 0;
   static int last = 0;
   static int lastTarget = 0;
 
 
 
   int curr = encoderGet(enc_r);
-  int thresh = 2;
+  int thresh = 1;
   int target = turnTarget;
 
   if(driveMode)
@@ -181,9 +188,10 @@ bool isDriving(){
   lastTarget = target;
   last = curr;
 
-  //not driving if we haven't moved in .5
-  if(count > 25)
+  //not driving if we haven't moved
+  if(count > 4){
     return false;
+  }
   else
     return true;
 

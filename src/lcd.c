@@ -1,6 +1,6 @@
 #include "main.h"
 
-#define AUTO_COUNT 6
+#define AUTO_COUNT 7
 
 
 void portTest(){
@@ -47,7 +47,7 @@ void operatorLCD(){
 
 void initializationLCD(){
 
-  const char *autoNames[AUTO_COUNT] = {"Skills", "None", "Close Park", "Far Park", "Close No Park", "Far No Park"};
+  const char *autoNames[AUTO_COUNT] = {"Skills", "None", "Close Park", "Far Park", "Close No Park", "Far No Park", "bigBoi"};
   auton = 1; // start with none as default
   int selected = 0; //layered selection
 
@@ -60,7 +60,7 @@ void initializationLCD(){
       }else if(buttonIsNewPress(LCD_LEFT)){
         if(auton > 0) auton--;
       }else if(buttonIsNewPress(LCD_RIGHT)){
-        if(auton < AUTO_COUNT) auton++;
+        if(auton < AUTO_COUNT-1) auton++;
       }
 
       lcdSetText(uart1, 1, autoNames[auton]);

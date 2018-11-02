@@ -55,6 +55,7 @@ void operatorControl();
 #define LINE_C 2
 #define LINE_L 3
 #define LINE_R 4
+#define LINE_I 6
 
 
 //sensors

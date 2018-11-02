@@ -1,5 +1,7 @@
 #include "main.h"
 
+TaskHandle launcherHandle;
+
 void launcher(int vel){
   motorSet(LAUNCHER, vel);
 }
@@ -35,4 +37,17 @@ void launcherOp(){
     vel = 127;
   t--;
 
+}
+
+//tasks
+void autoShootTask(void * parameter){
+  launcher(127);
+  while(!isFired()) delay(20);
+  delay(500);
+  launcher(0);
+  taskDelete(launcherHandle); // stop running the task
+}
+
+void autoShoot(){
+  launcherHandle = taskCreate(autoShootTask, TASK_DEFAULT_STACK_SIZE, NULL, TASK_PRIORITY_DEFAULT);
 }

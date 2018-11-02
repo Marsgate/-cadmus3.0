@@ -19,7 +19,8 @@ void operatorControl() {
     //feedback
     lcdClear(uart1);
     lcdPrint(uart1, 1, "L: %d, R:%d", encoderGet(enc_l), encoderGet(enc_r));
-    lcdPrint(uart1, 2, "Gyro: %d", gyRead());
+    //lcdPrint(uart1, 2, "Gyro: %d", gyRead());
+    lcdPrint(uart1, 1, "Line: %d", analogRead(LINE_I));
     delay(20);
   }
 }
