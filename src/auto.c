@@ -16,7 +16,7 @@ void close(){
   else
     autoTurn(13);
   loadBall();
-  autoDrive(2.5 TL);
+  autoDrive(2.3 TL);
 
   //backup to align with next cap
   autoDrive(-1.1 TL);
@@ -93,15 +93,7 @@ void far(){
   autoDrive(-1);
 }
 
-void bigBoi(){
-  //flip the nearest cap
-  intake(127);
-  startDrive(3 TL);
-  while(encoderGet(enc_r) < 1.5 TL) delay(20);
-  setSpeed(20);
-  intakeBall();
-  while(encoderGet(enc_r) < 1.9 TL) delay(20);
-
+void doubleShot(){
   //back up against wall
   startDrive(-2.2 TL);
   setSpeed(80);
@@ -120,6 +112,18 @@ void bigBoi(){
   adjuster(127);
   delay(1000);
   adjuster(10);
+}
+
+void bigBoi(){
+  //flip the nearest cap
+  intake(127);
+  startDrive(3 TL);
+  while(encoderGet(enc_r) < 1.5 TL) delay(20);
+  setSpeed(20);
+  intakeBall();
+  while(encoderGet(enc_r) < 1.9 TL) delay(20);
+
+  doubleShot();
 
   close();
 
@@ -138,32 +142,17 @@ void bigBoi(){
 
 void skills(){
   //flip the nearest cap
-  intake(-127);
+  intake(-60);
   startDrive(3 TL);
-  while(encoderGet(enc_r) < 1.5 TL) delay(20);
+  while(encoderGet(enc_r) < 1.2 TL) delay(20);
   setSpeed(20);
   while(encoderGet(enc_r) < 1.9 TL) delay(20);
   intakeBall();
-  while(encoderGet(enc_r) < 2.5 TL) delay(20);
-
-  //back up against wall
-  startDrive(-2.4 TL);
-  setSpeed(80);
+  while(encoderGet(enc_r) < 2.2 TL) delay(20);
+  startDrive(-1 TL);
   while(encoderGet(enc_r) > -.2 TL) delay(20);
-  setSpeed(127);
-  while(isDriving()) delay(20);
 
-  //align with flags
-  autoDrive(.4 TL);
-  autoTurn(90);
-
-  //launch the balls
-  autoShoot();
-  while(!isFired()) delay(20);
-  intake(127);
-  adjuster(127);
-  delay(1000);
-  adjuster(10);
+  doubleShot();
 
   close();
 
@@ -173,7 +162,7 @@ void skills(){
 
   //align for park
   autoTurn(-90);
-  autoDrive(1.95 TL);
+  autoDrive(2 TL);
   autoTurn(90);
   autoDrive(.7 TL);
 
@@ -204,6 +193,7 @@ void autonomous() {
       skills();
       break;
     case 1:
+      autoTurn(90);
       break; //None
     case 2:
       park = true;
